@@ -68,15 +68,15 @@ fun listNotes() {
 }
 
 fun updateNote() {
-    println("You chose Update Note")
+    logger.info {  " UpdateNote() function invoked"}
 }
 
 fun deleteNote() {
 
-    println("You chose Delete Note")
+    logger.info {  " DeleteNote function invoked"}
 }
 
 fun exitApp() {
-    println("Exiting...bye")
+    logger.info {  "ExitApp() function invoked"}
     exit(0)
 }
