@@ -44,7 +44,7 @@ fun runMenu() {
     } while (true)
 }
 
-fun addNote() {
+
     //logger.info { "addNote() function invoked" }
     fun addNote(){
         //logger.info { "addNote() function invoked" }
@@ -60,7 +60,7 @@ fun addNote() {
         }
     }
 
-}
+
 
 fun listNotes() {
     //logger.info { "listNotes() function invoked " }
@@ -73,10 +73,20 @@ fun updateNote() {
 
 fun deleteNote() {
 
-    logger.info {  " DeleteNote function invoked"}
+   // logger.info {  " DeleteNote function invoked"}
+    listNotes()
+    if (noteAPI.numberOfNotes() >0){
+        val indexToDelete = readNextInt("Enter the index of the note to delete: ")
+        val noteToDelete = noteAPI.deleteNote(indexToDelete)
+        if (noteToDelete != null) {
+            println("Delete Successful! Delete note: ${noteToDelete.noteTitle}")
+        }else{
+            println("Delete Not Successful")
+        }
+    }
 }
 
 fun exitApp() {
-    logger.info {  "ExitApp() function invoked"}
+    logger.info {  "ExitApp() f     §unction invoked"}
     exit(0)
 }
