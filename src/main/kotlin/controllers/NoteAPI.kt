@@ -28,6 +28,34 @@ import kotlin.jvm.Throws
             }
         }
 
+        fun listActiveNotes(): String {
+            return if (numberOfActiveNotes() == 0) {
+                "No active notes stored"
+            } else {
+                var listOfActiveNottes = ""
+                for (note in notes) {
+                    if (!note.isNoteArchived) {
+                        listOfActiveNottes += "${notes.indexOf(note)}: $note \n"
+                    }
+
+                }
+                listOfActiveNottes
+            }
+        }
+
+        fun listArchiveNotes(): String {
+            return if (numberOfArchiveNote()== 0){
+                "No archived notes stored"
+            }else {
+                var listOfArchiveNotes = ""
+                for (note in notes){
+                    if (note.isNoteArchived) {
+                        listOfArchiveNotes += "${notes.indexOf(note)}: $note \n"
+                    }
+                }
+                listOfArchiveNotes
+            }
+        }
         fun numberOfNotes(): Int {
             return notes.size
         }
@@ -78,6 +106,38 @@ import kotlin.jvm.Throws
         @Throws(Exception::class)
         fun store() {
             serializer.write(notes)
+        }
+        fun archiveNote(indexToArchive: Int): Boolean {
+            if (isValidIndex(indexToArchive)) {
+                val noteToArchive = notes[indexToArchive]
+                if (!noteToArchive.isNoteArchived) {
+                    noteToArchive.isNoteArchived = true
+                    return true
+                }
+            }
+            return false
+        }
+
+
+
+        fun numberOfActiveNotes(): Int{
+            var counter = 0
+            for (note in notes){
+                if (!note.isNoteArchived){
+                    counter++
+                }
+            }
+            return counter
+        }
+
+        fun numberOfArchiveNote(): Int  {
+        var counter = 0
+            for (note in notes ){
+                if (note.isNoteArchived) {
+                    counter++
+                }
+            }
+            return counter
         }
 
     }
