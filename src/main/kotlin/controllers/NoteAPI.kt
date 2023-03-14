@@ -27,6 +27,35 @@ import kotlin.jvm.Throws
                 listOfNotes
             }
         }
+        fun listNotesBySelectedPriority(priority: Int): String {
+            return if (notes.isEmpty()) {
+                "No notes stored"
+            } else {
+                var listOfNotes = ""
+                for (i in notes.indices) {
+                    if (notes[i].notePriority == priority) {
+                        listOfNotes +=
+                            """$i: ${notes[i]}
+                        """.trimIndent()
+                    }
+                }
+                if (listOfNotes.equals("")) {
+                    "No notes with priority: $priority"
+                } else {
+                    "${numberOfNotesByPriority(priority)} notes with priority $priority: $listOfNotes"
+                }
+            }
+        }
+
+        fun numberOfNotesByPriority(priority: Int): Int {
+            var counter = 0
+            for (note in notes) {
+                if (note.notePriority == priority) {
+                    counter++
+                }
+            }
+            return counter
+        }
 
         fun listActiveNotes(): String {
             return if (numberOfActiveNotes() == 0) {
