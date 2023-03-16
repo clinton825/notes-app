@@ -163,5 +163,10 @@ import kotlin.jvm.Throws
             }
             return counter
         }
+        fun searchByTitle(searchString : String) =
+            notes.filter { note -> note.noteTitle.contains(searchString, ignoreCase = true)}
+                .joinToString (separator = "\n") {
+                        note ->  notes.indexOf(note).toString() + ": " + note.toString() }
 
-    }
+}
+
