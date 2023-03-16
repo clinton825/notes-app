@@ -28,9 +28,9 @@ class NoteAPITest {
     fun setup(){
         learnKotlin = Note("Learning Kotlin", 5, "College", false)
         summerHoliday = Note("Summer Holiday to France", 1, "Holiday", false)
-        codeApp = Note("Code App", 4, "Work", false)
+        codeApp = Note("Code App", 4, "Work", true)
         testApp = Note("Test App", 4, "Work", false)
-        swim = Note("Swim - Pool", 3, "Hobby", false)
+        swim = Note("Swim - Pool", 3, "Hobby", true)
 
         //adding 5 Note to the notes api
         populatedNotes!!.add(learnKotlin!!)
@@ -233,14 +233,13 @@ class NoteAPITest {
 
         @Test
         fun `listActiveNotes returns active notes when ArrayList has active notes stored`() {
-            assertEquals(5, populatedNotes!!.numberOfActiveNotes())
-            //changed test to 5 as 5 is set to active in before each
+            assertEquals(3, populatedNotes!!.numberOfActiveNotes())
             val activeNotesString = populatedNotes!!.listActiveNotes().lowercase()
             assertTrue(activeNotesString.contains("learning kotlin"))
-            //assertFalse(activeNotesString.contains("code app"))
+            assertFalse(activeNotesString.contains("code app"))
             assertTrue(activeNotesString.contains("summer holiday"))
             assertTrue(activeNotesString.contains("test app"))
-            //assertFalse(activeNotesString.contains("swim"))
+            assertFalse(activeNotesString.contains("swim"))
         }
 
 //      @Test
@@ -251,15 +250,16 @@ class NoteAPITest {
 //            )
 //        }
 
+
         @Test
         fun `listArchivedNotes returns archived notes when ArrayList has archived notes stored`() {
-            assertEquals(0, populatedNotes!!.numberOfArchiveNote())
+            assertEquals(2, populatedNotes!!.numberOfArchiveNote())
             val archivedNotesString = populatedNotes!!.listArchiveNotes().lowercase()
             assertFalse(archivedNotesString.contains("learning kotlin"))
-           // assertTrue(archivedNotesString.contains("code app"))
+            assertTrue(archivedNotesString.contains("code app"))
             assertFalse(archivedNotesString.contains("summer holiday"))
             assertFalse(archivedNotesString.contains("test app"))
-           // assertTrue(archivedNotesString.contains("swim"))
+            assertTrue(archivedNotesString.contains("swim"))
         }
 
         @Test
