@@ -177,7 +177,7 @@ fun listAllNotes() {
 }
 
 fun listArchivedNotes() {
-    println(noteAPI.listArchiveNotes())
+    println(noteAPI.listArchivedNotes())
 }
 
 fun save() {

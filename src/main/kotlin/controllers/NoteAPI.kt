@@ -1,7 +1,6 @@
 package controllers
 import models.Note
 import persistence.Serializer
-import persistence.XMLSerializer
 import kotlin.jvm.Throws
 
 
@@ -10,10 +9,11 @@ import kotlin.jvm.Throws
         private var serializer: Serializer = serializerType
 
         private var notes = ArrayList<Note>()
-        private fun formatListString(notesToFormat : List<Note>) : String =
+        private fun formatListString(notesToFormat: List<Note>): String =
             notesToFormat
-                .joinToString (separator = "\n") { note ->
-                    notes.indexOf(note).toString() + ": " + note.toString() }
+                .joinToString(separator = "\n") { note ->
+                    notes.indexOf(note).toString() + ": " + note.toString()
+                }
 
 
         fun add(note: Note): Boolean {
@@ -22,30 +22,16 @@ import kotlin.jvm.Throws
         }
 
         fun listAllNotes(): String =
-            if  (notes.isEmpty()) "No notes stored"
-            else notes.joinToString (separator = "\n") { note ->
-                notes.indexOf(note).toString() + ": " + note.toString() }
+            if (notes.isEmpty()) "No notes stored"
+            else formatListString(notes)
 
-
-        fun listNotesBySelectedPriority(priority: Int): String {
-            return if (notes.isEmpty()) {
-                "No notes stored"
-            } else {
-                var listOfNotes = ""
-                for (i in notes.indices) {
-                    if (notes[i].notePriority == priority) {
-                        listOfNotes +=
-                            """$i: ${notes[i]}
-                        """.trimIndent()
-                    }
-                }
-                if (listOfNotes.equals("")) {
-                    "No notes with priority: $priority"
-                } else {
-                    "${numberOfNotesByPriority(priority)} notes with priority $priority: $listOfNotes"
-                }
+        fun listNotesBySelectedPriority(priority: Int): String =
+            if (notes.isEmpty()) "No notes stored"
+            else {
+                val listOfNotes = formatListString(notes.filter { note -> note.notePriority == priority })
+                if (listOfNotes.equals("")) "No notes with priority: $priority"
+                else "${numberOfNotesByPriority(priority)} notes with priority $priority: $listOfNotes"
             }
-        }
 
         fun numberOfNotesByPriority(priority: Int): Int {
             var counter = 0
@@ -57,34 +43,15 @@ import kotlin.jvm.Throws
             return counter
         }
 
-        fun listActiveNotes(): String {
-            return if (numberOfActiveNotes() == 0) {
-                "No active notes stored"
-            } else {
-                var listOfActiveNottes = ""
-                for (note in notes) {
-                    if (!note.isNoteArchived) {
-                        listOfActiveNottes += "${notes.indexOf(note)}: $note \n"
-                    }
+        fun listActiveNotes(): String =
+            if (numberOfActiveNotes() == 0) "No active notes stored"
+            else formatListString(notes.filter { note -> !note.isNoteArchived })
 
-                }
-                listOfActiveNottes
-            }
-        }
 
-        fun listArchiveNotes(): String {
-            return if (numberOfArchiveNote()== 0){
-                "No archived notes stored"
-            }else {
-                var listOfArchiveNotes = ""
-                for (note in notes){
-                    if (note.isNoteArchived) {
-                        listOfArchiveNotes += "${notes.indexOf(note)}: $note \n"
-                    }
-                }
-                listOfArchiveNotes
-            }
-        }
+        fun listArchivedNotes(): String =
+            if  (numberOfArchiveNotes() == 0) "No archived notes stored"
+            else formatListString(notes.filter { note -> note.isNoteArchived})
+
         fun numberOfNotes(): Int {
             return notes.size
         }
@@ -159,7 +126,7 @@ import kotlin.jvm.Throws
             return counter
         }
 
-        fun numberOfArchiveNote(): Int  {
+        fun numberOfArchiveNotes(): Int  {
         var counter = 0
             for (note in notes ){
                 if (note.isNoteArchived) {
