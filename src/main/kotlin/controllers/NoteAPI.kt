@@ -1,7 +1,6 @@
 package controllers
 import models.Note
 import persistence.Serializer
-import kotlin.jvm.Throws
 
 
     class NoteAPI(serializerType: Serializer) {
@@ -49,7 +48,7 @@ import kotlin.jvm.Throws
 
 
         fun listArchivedNotes(): String =
-            if  (numberOfArchiveNotes() == 0) "No archived notes stored"
+            if  (numberOfArchivedNotes() == 0) "No archived notes stored"
             else formatListString(notes.filter { note -> note.isNoteArchived})
 
         fun numberOfNotes(): Int {
@@ -68,7 +67,7 @@ import kotlin.jvm.Throws
         }
 
         fun isValidIndex(index: Int): Boolean {
-            return isValidListIndex(index, notes);
+            return isValidListIndex(index, notes)
         }
 
         fun deleteNote(indexToDelete: Int): Note? {
@@ -116,25 +115,10 @@ import kotlin.jvm.Throws
 
 
 
-        fun numberOfActiveNotes(): Int{
-            var counter = 0
-            for (note in notes){
-                if (!note.isNoteArchived){
-                    counter++
-                }
-            }
-            return counter
-        }
+        fun numberOfActiveNotes(): Int = notes.count { note: Note -> note.isNoteArchived }
 
-        fun numberOfArchiveNotes(): Int  {
-        var counter = 0
-            for (note in notes ){
-                if (note.isNoteArchived) {
-                    counter++
-                }
-            }
-            return counter
-        }
+        fun numberOfArchivedNotes(): Int = notes.count { note: Note -> note.isNoteArchived }
+
         fun searchByTitle (searchString : String) =
             formatListString(
                 notes.filter { note -> note.noteTitle.contains(searchString, ignoreCase = true) })
