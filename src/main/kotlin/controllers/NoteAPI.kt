@@ -10,6 +10,11 @@ import kotlin.jvm.Throws
         private var serializer: Serializer = serializerType
 
         private var notes = ArrayList<Note>()
+        private fun formatListString(notesToFormat : List<Note>) : String =
+            notesToFormat
+                .joinToString (separator = "\n") { note ->
+                    notes.indexOf(note).toString() + ": " + note.toString() }
+
 
         fun add(note: Note): Boolean {
 
@@ -163,10 +168,9 @@ import kotlin.jvm.Throws
             }
             return counter
         }
-        fun searchByTitle(searchString : String) =
-            notes.filter { note -> note.noteTitle.contains(searchString, ignoreCase = true)}
-                .joinToString (separator = "\n") {
-                        note ->  notes.indexOf(note).toString() + ": " + note.toString() }
+        fun searchByTitle (searchString : String) =
+            formatListString(
+                notes.filter { note -> note.noteTitle.contains(searchString, ignoreCase = true) })
 
-}
+    }
 
