@@ -31,6 +31,8 @@ fun runMenu() {
             4 -> deleteNote()
             5 -> archiveNote()
             6 -> searchNotes()
+            7 -> sortNotes()
+            8 -> categoryNotes()
             20 -> save()
             21 -> load()
             0 -> exitApp()
@@ -39,7 +41,13 @@ fun runMenu() {
     } while (true)
 }
 
+fun categoryNotes() {
+    println(noteAPI.countNotesOfaSpecificCategory(readNextLine("Enter category to see how many there is: ")))
+}
 
+fun sortNotes() {
+   noteAPI.sortByPriority()
+}
 
 
 fun mainMenu(): Int {
@@ -55,6 +63,8 @@ fun mainMenu(): Int {
          > |   4) Delete a note             |
          > |   5) Archive a note            | 
          > |   6) Searching by a title      |
+         > |   7) Sort by Priority      
+         > |   8) Number of notes by category|
          > ----------------------------------
          > |   20) Save notes               |
          > |   21) Load notes               |
