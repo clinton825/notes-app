@@ -84,6 +84,23 @@ import persistence.Serializer
             return false
         }
 
+        fun sortByPriority(){
+            for (i in 0 until notes.size){
+                for(j in i + 1 until notes.size){
+                if (notes[i].notePriority > notes[j].notePriority){
+                    swap(notes[i], notes[j])
+                }
+                }
+            }
+        }
+        private fun swap (firstNote: Note, secondNote: Note){
+            val tempNote = notes[notes.indexOf(secondNote)]
+            val indexOffirstNote = notes.indexOf(firstNote)
+            notes[notes.indexOf(secondNote)] = firstNote
+            notes[indexOffirstNote] = tempNote
+
+        }
+
         @Throws(Exception::class)
         fun load() {
             notes = serializer.read() as ArrayList<Note>
@@ -104,7 +121,8 @@ import persistence.Serializer
             return false
         }
 
-
+fun countNotesOfaSpecificCategory(category: String) =
+    notes.count{ note: Note -> note.noteCategory==category  }
 
         fun numberOfActiveNotes(): Int = notes.count { note: Note -> note.isNoteArchived }
 
