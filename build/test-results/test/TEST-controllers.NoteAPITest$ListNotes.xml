@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="controllers.NoteAPITest$ListNotes" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-03-22T09:32:30" hostname="IT119PC13" time="0.04">
+  <properties/>
+  <testcase name="listActiveNotes returns active notes when ArrayList has active notes stored()" classname="controllers.NoteAPITest$ListNotes" time="0.04"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
