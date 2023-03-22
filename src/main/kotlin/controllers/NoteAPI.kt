@@ -32,15 +32,6 @@ import persistence.Serializer
                 else "${numberOfNotesByPriority(priority)} notes with priority $priority: $listOfNotes"
             }
 
-        fun numberOfNotesByPriority(priority: Int): Int {
-            var counter = 0
-            for (note in notes) {
-                if (note.notePriority == priority) {
-                    counter++
-                }
-            }
-            return counter
-        }
 
         fun listActiveNotes(): String =
             if (numberOfActiveNotes() == 0) "No active notes stored"
@@ -118,7 +109,7 @@ import persistence.Serializer
         fun numberOfActiveNotes(): Int = notes.count { note: Note -> note.isNoteArchived }
 
         fun numberOfArchivedNotes(): Int = notes.count { note: Note -> note.isNoteArchived }
-
+        fun numberOfNotesByPriority(priority: Int): Int = notes.count { p: Note -> p.notePriority == priority }
         fun searchByTitle (searchString : String) =
             formatListString(
                 notes.filter { note -> note.noteTitle.contains(searchString, ignoreCase = true) })
